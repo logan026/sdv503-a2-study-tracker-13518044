@@ -11,4 +11,17 @@ const studySessions = [];
 //Creatomg a menu to input study data
 async function addStudyMenu() {
     const rl = createInterface();
+    console.log('\n----- Add New Study Session -----');
+    //Topic input loop
+    try { 
+        const topic = await rl.question('Enter Study Topic: '); //Topic prompt
+        rl.close();
+        await console.log(topic);
+        return topic;
+    } finally {
+        
+    } 
 };
+addStudyMenu();
+
+
