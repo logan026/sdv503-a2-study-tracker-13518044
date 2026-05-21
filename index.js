@@ -37,11 +37,31 @@ async function addStudyMenu() {
             }
         };
         console.log('You studied ' + minutes + ' minutes.'); //Show us the minutes input entered
+        
+        // ----- Save Valid Session To Array -----
         studySessions.push({topic: topic.trim(), minutes: minutes}); //Pushes the users succesful input into our array
         console.log('Study Session Succesfully Recorded');
-    } finally {
-        rl.close(); //Closes the loop
+    } catch(error) { //Catches any bugs or crashes that happen in the try block above
+        console.log('An error occurred:', error.message); //Prints the error message to the termnial so we can debug
+    } finally { 
+        rl.close(); //Closes our input channel so the terminal dosent get stuck listening forever
     }
+    
+    await listStudyMenu(); //Tells the program to run our list menu and wait for it to finish
 };
 
+// ----- List Study Sessions -----
+async function listStudyMenu() { //Creating a menu to print our study data onto
+    console.log('\n----- Recorded Study Sessions -----');
+
+    if (studySessions.length === 0) { //Checks if array is currently empty
+        console.log('No Sessions Recorded Yet.'); //Lets the user know there is no study sessions recorded
+    } else { //If the array has data in it
+        studySessions.forEach((session, index) => { //Loops through every saved session in the array one at a time
+            console.log((index + 1) + '. Topic: ' + session.topic + ' | Duration: ' + session.minutes + ' minutes');
+        });
+    }
+}
+
 addStudyMenu(); //Using function for testing
+
