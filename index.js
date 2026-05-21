@@ -4,6 +4,11 @@ const { stdin: input, stdout: output } = require('node:process');
 function createInterface() {
     return readline.createInterface({ input, output }); //Tells programm to wait for input before outputting to the terminal
 };
+async function pause() { //Create a new function to pause the program, helping the user to read the screen easier
+    const rl = createInterface();
+    await rl.question('\nPress Enter To return to the Main Menu.'); //Waits for user to press enter
+    rl.close(); //Closes after user presses enter
+}
 //Array to store our study session's in
 const studySessions = [];
 
@@ -60,6 +65,7 @@ async function listStudyMenu() { //Creating a menu to print our study data onto
             console.log((index + 1) + '. Topic: ' + session.topic + ' | Duration: ' + session.minutes + ' minutes');
         });
     }
+    await pause(); //This pauses the code until the user presses enter
     await mainMenu(); //Return to main menu
 };
 
@@ -69,6 +75,7 @@ async function minutesTotalMenu() { //Creating a function to calculate total min
     //Uses .reduce() to loop through the array and add everything up. 'sum' is our total and '0' is the number it counts from
     const totalMinutes = studySessions.reduce((sum, session) => sum + session.minutes, 0);
     console.log('Total Study Time: ' + totalMinutes + ' minutes');
+    await pause();
     await mainMenu(); //Sends the user back to the main menu
 }
 
