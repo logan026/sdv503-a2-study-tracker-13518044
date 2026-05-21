@@ -61,6 +61,16 @@ async function listStudyMenu() { //Creating a menu to print our study data onto
             console.log((index + 1) + '. Topic: ' + session.topic + ' | Duration: ' + session.minutes + ' minutes');
         });
     }
+    await minutesTotalMenu(); //Display total minutes after displaying the array
+};
+
+// ----- Total Minutes Menu -----
+async function minutesTotalMenu() { //Creating a function to calculate total minutes in array
+    console.log('\n----- Weekly Summary -----');
+    //Uses .reduce() to loop through the array and add everything up. 'sum' is our total and '0' is the number it counts from
+    const totalMinutes = studySessions.reduce((sum, session) => sum + session.minutes, 0);
+    console.log('Total Study Time: ' + totalMinutes + ' minutes');
+    await addStudyMenu(); //Sends the user back to the add study menu after the total has been displayed
 }
 
 addStudyMenu(); //Using function for testing
