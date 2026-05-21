@@ -37,6 +37,8 @@ async function addStudyMenu() {
             }
         };
         console.log('You studied ' + minutes + ' minutes.'); //Show us the minutes input entered
+        studySessions.push({topic: topic.trim(), minutes: minutes}); //Pushes the users succesful input into our array
+        console.log('Study Session Succesfully Recorded');
     } finally {
         rl.close(); //Closes the loop
     }
