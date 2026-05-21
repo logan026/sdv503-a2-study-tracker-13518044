@@ -4,7 +4,6 @@ const { stdin: input, stdout: output } = require('node:process');
 function createInterface() {
     return readline.createInterface({ input, output }); //Tells programm to wait for input before outputting to the terminal
 };
-
 //Array to store our study session's in
 const studySessions = [];
 
@@ -47,7 +46,7 @@ async function addStudyMenu() {
         rl.close(); //Closes our input channel so the terminal dosent get stuck listening forever
     }
     
-    await listStudyMenu(); //Tells the program to run our list menu and wait for it to finish
+    await mainMenu(); //Tells the program to return to main menu after valid input
 };
 
 // ----- List Study Sessions -----
@@ -61,7 +60,7 @@ async function listStudyMenu() { //Creating a menu to print our study data onto
             console.log((index + 1) + '. Topic: ' + session.topic + ' | Duration: ' + session.minutes + ' minutes');
         });
     }
-    await minutesTotalMenu(); //Display total minutes after displaying the array
+    await mainMenu(); //Return to main menu
 };
 
 // ----- Total Minutes Menu -----
@@ -70,8 +69,39 @@ async function minutesTotalMenu() { //Creating a function to calculate total min
     //Uses .reduce() to loop through the array and add everything up. 'sum' is our total and '0' is the number it counts from
     const totalMinutes = studySessions.reduce((sum, session) => sum + session.minutes, 0);
     console.log('Total Study Time: ' + totalMinutes + ' minutes');
-    await addStudyMenu(); //Sends the user back to the add study menu after the total has been displayed
+    await mainMenu(); //Sends the user back to the main menu
 }
 
-addStudyMenu(); //Using function for testing
+// ----- Main Menu -----
+async function mainMenu() { //Creating a menu for users to navigate
+    const rl = createInterface(); //redeclaring the input/output variable inside the scope of the function
+    console.log('\n----- Study Tracker Main Menu -----');
+    console.log('1. Add a Study Session');
+    console.log('2. List all Study Sessions')
+    console.log('3. Show Total Minutes Studied');
+    console.log('4. Exit');
+    const response = await rl.question('Choose an option (1-4): '); //Asks the user what option and waits for response
+    rl.close(); //closes question after recieving response
+    switch (response.trim()) { //Adding a switch loop to see what the user input
+        case '1': //If the user input is 1
+            await addStudyMenu(); //Take user to the add study menu
+            break; //Break from loop
+        case '2':
+            await listStudyMenu();
+            break;
+        case '3':
+            await minutesTotalMenu();
+            break;
+        case '4':
+            console.log('Goodbye.');
+            process.exit(0); //Exits the programm
+            break;
+        default: //If anything other than the numbers 1-4 were input
+            console.log('Invalid option. Please select 1, 2, 3, or 4.'); //Error message
+            await mainMenu(); //Send user back to main menu
+            break;
+    }
+}
+
+mainMenu(); //Start program
 
