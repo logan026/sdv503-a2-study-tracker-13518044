@@ -14,6 +14,7 @@ const studySessions = [];
 
 //Creating a menu to input study data
 async function addStudyMenu() {
+    console.clear(); //Clears the console on all menus to give the user a clean CLI experience
     const rl = createInterface(); //Creates function to handle user input and ouput
     console.log('\n----- Add New Study Session -----'); //\n creates a new line for the text to be put on ensuring our CLI stays clean
     //Topic input loop
@@ -40,11 +41,21 @@ async function addStudyMenu() {
                 break; //Breaks us out of the while loop
             }
         };
-        console.log('You studied ' + minutes + ' minutes.'); //Show us the minutes input entered
-        
-        // ----- Save Valid Session To Array -----
-        studySessions.push({topic: topic.trim(), minutes: minutes}); //Pushes the users succesful input into our array
-        console.log('Study Session Succesfully Recorded');
+        //-----CONFIRMATION PROMPT-----
+        console.clear();
+        console.log('\n-----Confirm Study Session-----');
+        console.log('Topic: ' + topic)
+        console.log('Duration: ' + minutes + ' minutes');
+        //Ask the user to type Y to save or N to cancel
+        const confirm = await rl.question('\nSave this session? (y/n): ');
+        if (confirm.toLowerCase().trim() === 'n') { //If user inputs n
+            console.log('Session Cancelled.'); //Cancel session
+            await pause();
+        } else { //If user input is y or anything else
+            console.log('Added ' + topic + ' for ' + minutes + ' minutes to recorded sessions.')
+            studySessions.push({topic: topic.trim(), minutes: minutes}); //Save study session to studySessions array
+            await pause();
+        }
     } catch(error) { //Catches any bugs or crashes that happen in the try block above
         console.log('An error occurred:', error.message); //Prints the error message to the termnial so we can debug
     } finally { 
@@ -56,6 +67,7 @@ async function addStudyMenu() {
 
 // ----- List Study Sessions -----
 async function listStudyMenu() { //Creating a menu to print our study data onto
+    console.clear();
     console.log('\n----- Recorded Study Sessions -----');
 
     if (studySessions.length === 0) { //Checks if array is currently empty
@@ -71,6 +83,7 @@ async function listStudyMenu() { //Creating a menu to print our study data onto
 
 // ----- Total Minutes Menu -----
 async function minutesTotalMenu() { //Creating a function to calculate total minutes in array
+    console.clear();
     console.log('\n----- Weekly Summary -----');
     //Uses .reduce() to loop through the array and add everything up. 'sum' is our total and '0' is the number it counts from
     const totalMinutes = studySessions.reduce((sum, session) => sum + session.minutes, 0);
@@ -81,6 +94,7 @@ async function minutesTotalMenu() { //Creating a function to calculate total min
 
 // ----- Main Menu -----
 async function mainMenu() { //Creating a menu for users to navigate
+    console.clear();
     const rl = createInterface(); //redeclaring the input/output variable inside the scope of the function
     console.log('\n----- Study Tracker Main Menu -----');
     console.log('1. Add a Study Session');
