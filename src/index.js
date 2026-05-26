@@ -32,8 +32,7 @@ async function addStudyMenu() {
         let minutes; //Declaring the minutes variable outside of the loop so we can use it later
         while (true) { //We wrap the minutes question in a while loop so we only have to retry this input instead of going back to the start if invalid
             const minutesInput = await rl.question('Enter Duration (minutes): '); //Asking question and waiting for response
-            minutes = Number(minutesInput, 10); //Converting the input from "12" as a string to 12 as a integer so we can use its value for math later on
-            //', 10' - Tells the programm to use the base-10 decimal system(0-9).
+            minutes = Number(minutesInput); //Converting the input from "12" as a string to 12 as a integer so we can use its value for math later on
             //Fixed number bug to not accept decimals instead of rounding
             if (isNaN(minutes) || !Number.isInteger(minutes) || minutes <= 0) { //Checking if the input IS a number and if the number IS positive and more than zero
                 console.log('Error: Please Enter A Whole Number Greater Than Zero. '); //Error message
