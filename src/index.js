@@ -1,6 +1,6 @@
 //Initialize the readLine interface
-const readline = require('node:readline/promises');
-const { stdin: input, stdout: output } = require('node:process');
+import readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
 function createInterface() {
     return readline.createInterface({ input, output }); //Tells programm to wait for input before outputting to the terminal
 };

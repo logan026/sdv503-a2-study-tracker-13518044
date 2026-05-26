@@ -1,0 +1,22 @@
+{
+  "name": "sdv503-a2-13518044-pike-logan",
+  "version": "1.0.0",
+  "description": "Simple study tracker for students to keep up to date with all their study sessions.",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/logan026/sdv503-a2-study-tracker-13518044.git"
+  },
+  "keywords": [],
+  "author": "Logan Pike",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/logan026/sdv503-a2-study-tracker-13518044/issues"
+  },
+  "homepage": "https://github.com/logan026/sdv503-a2-study-tracker-13518044#readme"
+}
